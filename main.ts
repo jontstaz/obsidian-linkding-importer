@@ -21,11 +21,7 @@ export default class LinkdingImportPlugin extends Plugin {
 		if (this.settings.updateInterval !== 0) {
 			setInterval(this.loadBookmarks.bind(this), this.settings.updateInterval * 60 * 1000);
 		}
-
-		this.addRibbonIcon('dice', 'Greet', () => {
-			new Notice('Hello, world!');
-		  });
-
+		
 		this.addCommand({
 			id: 'fetch-linkding-bookmarks',
 			name: 'Fetch Linkding Bookmarks',
