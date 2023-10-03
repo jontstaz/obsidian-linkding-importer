@@ -1,6 +1,5 @@
 // Import the necessary classes from the Obsidian API
 import { Plugin, PluginSettingTab, App, Setting, TFile, Notice, RequestUrlParam, RequestUrlResponse, requestUrl } from 'obsidian';
-import axios from 'axios';
 
 interface LinkdingImportSettings {
 	linkdingInstanceURL: string;
@@ -55,15 +54,6 @@ export default class LinkdingImportPlugin extends Plugin {
 	}
 
 	async loadBookmarks() {
-		/*
-		const response = await axios.get(`${this.settings.linkdingInstanceURL}/api/bookmarks/?limit=100&offset=100`, {
-			headers: {
-				'Authorization': `Bearer ${this.settings.linkdingAPIKey}`
-			}
-		});
-		const data = response.data;
-		*/
-
 		const options: RequestUrlParam = {
 			url: `${this.settings.linkdingInstanceURL}/api/bookmarks/?limit=${this.settings.fetchLimit}&offset=${this.settings.fetchOffset}`,
 			method: 'GET',
