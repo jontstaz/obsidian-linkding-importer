@@ -20,6 +20,7 @@ export default class LinkdingImportPlugin extends Plugin {
 
 		if (this.settings.updateInterval !== 0) {
 			setInterval(this.loadBookmarks.bind(this), this.settings.updateInterval * 60 * 1000);
+			this.registerInterval(this.settings.updateInterval * 60 * 1000);
 		}
 		
 		this.addCommand({
@@ -30,7 +31,7 @@ export default class LinkdingImportPlugin extends Plugin {
 	}
 
 	async onunload() {
-		await this.saveSettings();
+		
 	}
 
 	async loadSettings() {
@@ -114,7 +115,6 @@ class LinkdingImportSettingTab extends PluginSettingTab {
 		let { containerEl } = this;
 
 		containerEl.empty();
-		containerEl.createEl('h2', { text: 'Linkding Import Settings' });
 
 		new Setting(containerEl)
 			.setName('Linkding Instance URL')
@@ -139,7 +139,7 @@ class LinkdingImportSettingTab extends PluginSettingTab {
 				}));
 		
 		new Setting(containerEl)
-			.setName('Search Query (Optional)')
+			.setName('Search query (optional)')
 			.setDesc('Filters results using a search phrase using the same logic as through the LinkDing UI.')
 			.addText(text => text
 				.setPlaceholder('Enter your search query...')
@@ -150,7 +150,7 @@ class LinkdingImportSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Results Limit')
+			.setName('Results limit')
 			.setDesc('Limits the max. number of bookmarks returned. If empty, the default is 100.')
 			.addText(text => text
 				.setPlaceholder('100')
@@ -193,7 +193,7 @@ class LinkdingImportSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Update Interval')
+			.setName('Update interval')
 			.setDesc('How often to fetch bookmarks from Linkding (in minutes)? 0 to disable automatic fetching.')
 			.addText(text => text
 				.setPlaceholder('30')
@@ -202,7 +202,7 @@ class LinkdingImportSettingTab extends PluginSettingTab {
 					let interval = parseInt(value);
 					if (!interval) {
 						interval = 0;
-						new Notice('Update Interval must be a positive number. Defaulting to 30');
+						new Notice('Update interval must be a positive number. Defaulting to 30');
 					}
 					this.plugin.settings.updateInterval = interval || 30;
 					await this.plugin.saveSettings();
