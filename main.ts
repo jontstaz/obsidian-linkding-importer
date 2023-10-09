@@ -30,10 +30,6 @@ export default class LinkdingImportPlugin extends Plugin {
 		  });
 	}
 
-	async onunload() {
-		
-	}
-
 	async loadSettings() {
 		this.settings = Object.assign({}, {
 			linkdingInstanceURL: "http://192.168.50.203:9090",
