@@ -1,7 +1,7 @@
 {
 	"id": "linkding-importer",
 	"name": "Linkding Importer",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"minAppVersion": "0.15.0",
 	"description": "Imports your bookmarks from Linkding and saves them into a specified file within the Obsidian Vault.",
 	"author": "jontstaz",
