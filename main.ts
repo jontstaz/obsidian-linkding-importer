@@ -19,8 +19,7 @@ export default class LinkdingImportPlugin extends Plugin {
 		this.addSettingTab(new LinkdingImportSettingTab(this.app, this));
 
 		if (this.settings.updateInterval !== 0) {
-			setInterval(this.loadBookmarks.bind(this), this.settings.updateInterval * 60 * 1000);
-			this.registerInterval(this.settings.updateInterval * 60 * 1000);
+			this.registerInterval(window.setInterval(this.loadBookmarks.bind(this), this.settings.updateInterval * 60 * 1000));
 		}
 		
 		this.addCommand({
