@@ -88,7 +88,7 @@ export default class LinkdingImportPlugin extends Plugin {
 			}
 
 			if (bookmark.tag_names && bookmark.tag_names.length > 0) {
-			content += `Tags: ${bookmark.tag_names.join(' ')} \n\n--- \n`;
+			content += `Tags: ${bookmark.tag_names.join(' #')} \n\n--- \n`;
 			} else {
 			content += '\n--- \n';
 			}
