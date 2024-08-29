@@ -5,6 +5,7 @@ interface LinkdingImportSettings {
 	linkdingInstanceURL: string;
 	linkdingAPIKey: string;
 	saveBookmarksTo: string;
+	unreadOnly: boolean;
 	updateInterval: number;
 	fetchQuery: string;
 	fetchLimit: number;
@@ -33,6 +34,7 @@ export default class LinkdingImportPlugin extends Plugin {
 		this.settings = Object.assign({}, {
 			linkdingInstanceURL: "http://192.168.50.203:9090",
 			linkdingAPIKey: "",
+			unreadOnly: false,
 			saveBookmarksTo: "notes/linkdingnotes",
 			updateInterval: 30,
 			fetchQuery: "",
@@ -54,6 +56,11 @@ export default class LinkdingImportPlugin extends Plugin {
 				'Content-Type': 'application/json'
 			}
 		}
+
+		if (this.settings.unreadOnly) {
+			options.url += "&unread=yes";
+		}
+
 		var response: RequestUrlResponse;
 		response = await requestUrl(options);
 		const data = response.json;
@@ -133,6 +140,16 @@ class LinkdingImportSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 		
+		new Setting(containerEl)
+			.setName('Unread only')
+			.setDesc('Fetch only unread bookmarks.')
+			.addToggle(item => item
+				.setValue(this.plugin.settings.unreadOnly)
+				.onChange(async (value) => {
+					this.plugin.settings.unreadOnly = value;
+					await this.plugin.saveSettings();
+				}));
+
 		new Setting(containerEl)
 			.setName('Search query (optional)')
 			.setDesc('Filters results using a search phrase using the same logic as through the LinkDing UI.')
